@@ -1,12 +1,13 @@
-import {React, useState, useEffect,useCallback} from 'react'
-import styles from './StatusBar.module.css'
+import { useState, useEffect, useCallback } from "react";
+import styles from "./StatusBar.module.css";
 
-const statusBar = () => {
+const StatusBar = ({ toggleAppleMenu }) => {
   const [currentTime, setCurrentTime] = useState("");
-  function checkTime(i){
-    if (i < 10){
+
+  function checkTime(i) {
+    if (i < 10) {
       i = "0" + i;
-    }
+    } // add zero in front of numbers < 10
     return i;
   }
 
@@ -26,9 +27,9 @@ const statusBar = () => {
       "Friday",
       "Saturday",
     ];
-    var currentDayAndTime = `${days[d].substr(0, 3)} ${h}:${m}`; 
-    setCurrentTime(currentDayAndTime);
 
+    var currentDayAndTime = `${days[d].substr(0, 3)} ${h}:${m}`;
+    setCurrentTime(currentDayAndTime);
   }, []);
 
   useEffect(() => {
@@ -36,79 +37,71 @@ const statusBar = () => {
       getTime();
     }, 1000);
   }, [getTime]);
-
-
   return (
     <>
       <div className={styles.wrapper}>
-
-        {/* Inner left section */}
         <div className={styles.wrapper_inner_left}>
-          <img className ={styles.appleIcon}src = "\svgs\apple.svg" alt ="apple_icon" ></img>
-
-          <ul className= {styles.left_ul}>
+          <img
+            onClick={toggleAppleMenu}
+            className={styles.appleIcon}
+            src="/svgs/apple.svg"
+            alt="apple_icon"
+          />
+          <ul className={styles.left_ul}>
             <li>
-              <span>Finder</span>           
+              <span>Finder</span>
             </li>
             <li>
-              <span>File</span>           
+              <span>File</span>
             </li>
             <li>
-              <span>Edit</span>           
+              <span>Edit</span>
             </li>
             <li>
-              <span>View</span>           
+              <span>View</span>
             </li>
             <li>
-              <span>Go</span>           
+              <span>Go</span>
             </li>
             <li>
-              <span>Window</span>           
+              <span>Window</span>
             </li>
             <li>
-              <span>Help</span>           
+              <span>Help</span>
             </li>
           </ul>
         </div>
-
         <div className={styles.wrapper_inner_right}>
-          <ul className= {styles.right_ul}>
+          <ul className={styles.right_ul}>
             <li>
-              <img src= "/images/statusicons/1.png" alt = "s1"></img>
+              <img src="/images/statusicons/1.png" alt="s1" />
             </li>
             <li>
-              <img src= "/images/statusicons/2.png" alt = "s2"></img>
+              <img src="/images/statusicons/2.png" alt="s2" />
             </li>
             <li>
-              <img src= "/images/statusicons/3.png" alt = "s3"></img>
+              <img src="/images/statusicons/3.png" alt="s3" />
             </li>
             <li>
-              <img src= "/images/statusicons/4.png" alt = "s4"></img>
+              <img src="/images/statusicons/4.png" alt="s4" />
             </li>
             <li>
-              <img src= "/images/statusicons/5.png" alt = "s5"></img>
+              <img src="/images/statusicons/5.png" alt="s5" />
             </li>
             <li>
-              <img src= "/images/statusicons/6.png" alt = "s6"></img>
+              <img src="/images/statusicons/6.png" alt="s6" />
             </li>
             <li>
-              <img src= "/images/statusicons/7.png" alt = "s7"></img>
+              <img src="/images/statusicons/7.png" alt="s7" />
             </li>
             <li>
-              <span className={styles.date}> {currentTime}</span>
+              <span className={styles.date}>{currentTime}</span>
             </li>
-
-
           </ul>
-
-          
         </div>
-
-
       </div>
-    
     </>
-  )
-}
+  );
+};
 
-export default statusBar
+export default StatusBar;

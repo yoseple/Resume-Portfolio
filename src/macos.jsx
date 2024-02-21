@@ -28,15 +28,24 @@ function Mac() {
   const closeFolderContent = () => {
     setIsFolderOpen(false);
   };
+
   return (
-    <div className="wrapper">
-      <StatusBar/>
-      <div className='inner_wrapper'>
-        
+    <>
+      <div className="wrapper">
+        <StatusBar toggleAppleMenu={toggleAppleMenu} />
+        <div className="inner_wrapper" onClick={closeAppleMenu}>
+          <Folders openFolderContent={openFolderContent} />
+          <FolderContent
+            isFolderOpen={isFolderOpen}
+            closeFolderContent={closeFolderContent}
+          />
+          <AppleMenu isAppleMenuOpen={isAppleMenuOpen} />
+        </div>
+        <MenuBar />
       </div>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);

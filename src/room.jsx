@@ -1,12 +1,23 @@
 import ReactDOM from 'react-dom/client';
+import React, { Suspense, useState, useEffect, useRef } from "react";
 import "./style.css";
 import { Canvas } from "@react-three/fiber";
 import { Environment, PresentationControls, useGLTF, Html, PerspectiveCamera } from "@react-three/drei";
-import { Suspense, useState } from "react";
+
 
 function Scene() {
     const [zoomedIn, setZoomedIn] = useState(false);
+    const htmlContentRef = useRef(); // Reference to the container where the MacOS component will be portaled
 
+    useEffect(() => {
+        // Ensure MacOS is rendered inside the <Html> component using a portal
+        if (htmlContentRef.current) {
+            const portalDiv = document.createElement('div'); // This div acts as a portal target
+            htmlContentRef.current.appendChild(portalDiv);
+            const portalRoot = ReactDOM.createRoot(portalDiv); // Create a root for the portal
+            portalRoot.render(<MacOS/>); // Render MacOS component into the portal
+        }
+    }, []); 
     const LaptopModel = () => {
         const { scene } = useGLTF("https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf");
         return <primitive object={scene} position-y={1.05} scale={[1, 1, 1]} />;
@@ -31,6 +42,7 @@ function Scene() {
                 </PresentationControls>
                 {/* Other components */}
                 <Html
+                    ref={htmlContentRef}
                     wrapperClass="laptop"
                     position={[0, 0.05, -0.09]} // Adjusted position values; these are example values
                     transform
@@ -40,8 +52,8 @@ function Scene() {
                     occlude
                     
                 >
-                    <iframe src="/Mac-OS-Desktop/index.html" style="hidden"  />
-                    <iframe title="Desk Set" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/f26030d09d73422f8ff270425c7c63e0/embed"> </iframe> 
+                    {/* <iframe src="/macos.jsx" /> */}
+                    {/* <iframe title="Desk Set" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/f26030d09d73422f8ff270425c7c63e0/embed"> </iframe>  */}
                 </Html>
             </Suspense>
         </Canvas>
