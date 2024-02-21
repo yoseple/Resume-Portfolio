@@ -51,7 +51,7 @@ function Scene() {
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 
-root.render(<Scene />);
+root.render(<Scene/>);
 
 // Functional Component: Encapsulated the scene within a Scene functional component.
 // Suspense: Used Suspense from React to handle the asynchronous loading of models with useGLTF.
