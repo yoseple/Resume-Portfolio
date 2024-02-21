@@ -30,17 +30,11 @@ function Mac() {
   };
   return (
     <div className="wrapper">
-      <StatusBar toggleAppleMenu={toggleAppleMenu} />
-      <div className="inner_wrapper" onClick={closeAppleMenu}>
-        <Folders openFolderContent={openFolderContent} />
-        <FolderContent
-          isFolderOpen={isFolderOpen}
-          closeFolderContent={closeFolderContent}
-        />
-        <AppleMenu isAppleMenuOpen={isAppleMenuOpen} />
+      <StatusBar/>
+      <div className='inner_wrapper'>
+        
       </div>
-      <MenuBar />
-  </div>
+    </div>
   )
 }
 
