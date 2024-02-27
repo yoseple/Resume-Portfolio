@@ -52,7 +52,7 @@ function Scene() {
                     occlude
                     
                 >
-                    {/* <iframe src="/macos.jsx" /> */}
+                     <iframe src="https://benevolent-snickerdoodle-b8a816.netlify.app" /> 
                     {/* <iframe title="Desk Set" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/f26030d09d73422f8ff270425c7c63e0/embed"> </iframe>  */}
                 </Html>
             </Suspense>
