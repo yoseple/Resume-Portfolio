@@ -3,12 +3,18 @@ import React, { Suspense, useState, useEffect, useRef } from "react";
 import "./style.css";
 import { Canvas } from "@react-three/fiber";
 import { Environment, PresentationControls, useGLTF, Html, PerspectiveCamera } from "@react-three/drei";
+import * as THREE from 'three'
 
 
 function Scene() {
     const [zoomedIn, setZoomedIn] = useState(false);
     const htmlContentRef = useRef(); // Reference to the container where the MacOS component will be portaled
-
+    const [iframeSrc, setIframeSrc] = useState("https://benevolent-snickerdoodle-b8a816.netlify.app"); 
+    useEffect(() => {
+        // Append a timestamp or a random number as a query parameter to the URL
+        const newSrc = `${iframeSrc}?cacheBuster=${new Date().getTime()}`;
+        setIframeSrc(newSrc);
+      }, []);
     useEffect(() => {
         // Ensure MacOS is rendered inside the <Html> component using a portal
         if (htmlContentRef.current) {
@@ -28,12 +34,14 @@ function Scene() {
         return <primitive object={scene} position-y={-3.5} scale={[3, 3, 3]} />;
     };
 
+    
     // Camera controls and zoom logic would need to be re-implemented here
     // Use `useThree` for accessing the camera and other scene properties
 
     return (
         <Canvas camera={{ fov: 45, near: 0.1, far: 2000, position: [-3, 1.5, 4] }}>
             <Suspense fallback={null}>
+                
                 <Environment preset="warehouse" />
                 <PerspectiveCamera makeDefault fov={zoomedIn ? 35 : 50} position={[0, 3, 30]} />
                 <PresentationControls>
@@ -44,21 +52,31 @@ function Scene() {
                 <Html
                     ref={htmlContentRef}
                     wrapperClass="laptop"
-                    position={[0, 0.05, -0.09]} // Adjusted position values; these are example values
+                    className='content'
+                    position={[0, 2.68, 1]} // Adjusted position values; these are example values
                     transform
                     rotation-x={-.25} // This might need fine-tuning
-                    distanceFactor={1.16}
-                    scale={1.2}
+                    distanceFactor={1.14}
+                    scale={[0.9,0.9,0.9]}
                     occlude
                     
                 >
-                     <iframe src="https://benevolent-snickerdoodle-b8a816.netlify.app" /> 
-                    {/* <iframe title="Desk Set" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/f26030d09d73422f8ff270425c7c63e0/embed"> </iframe>  */}
+                    <div className='wrapper'>
+
+                    
+                            <iframe 
+                            src={iframeSrc}
+                            allow = "autoplay; fullscreen"
+                            execution-while-not-rendered = "true"
+                            web-share ="true" /> 
+                    </div>
                 </Html>
             </Suspense>
+           
         </Canvas>
     );
 }
+
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
